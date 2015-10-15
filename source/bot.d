@@ -16,7 +16,6 @@ import update;
 class Bot
 {
 	private string endpoint;
-	private uint offset = 0;
 
 	this(string token)
 	{
@@ -40,10 +39,7 @@ class Bot
 	{
 		Update[] updates;
 		string response;
-		if (offset == 0)
-			response = performRequest("getUpdates");
-		else
-			response = performRequest("getUpdates",[tuple("offset",to!string(offset))]);
+		response = performRequest("getUpdates");
 		foreach (jsonUpdate; parseJSON(response)["result"].array)
 		{
 			Update update = fromJSON!Update(jsonUpdate);
@@ -53,7 +49,8 @@ class Bot
 			return updates;
 		if (!keepMessages)
 		{
-			offset = updates[$-1].update_id +1;
+			uint offset = updates[$-1].update_id + 1;
+			response = performRequest("getUpdates",[tuple("offset",to!string(offset))]);
 		}
 		return updates;
 	}

@@ -5,6 +5,7 @@ dlang Telegram API Wrapper
 
 ```d
 import delegram;
+import std.stdio;
 
 void main()
 {

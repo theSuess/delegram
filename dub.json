@@ -1,0 +1,12 @@
+{
+	"name": "delegram",
+	"description": "dlang Telegram bot api",
+	"copyright": "Copyright © 2015, thesuess",
+	"authors": ["thesuess"],
+	"targetType":"library",
+	"license":"MIT",
+	"libs":["curl"],
+	"dependencies": {
+				"jsonizer": "~>0.5.1"
+	}
+}

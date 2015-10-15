@@ -4,6 +4,7 @@ import chat;
 struct Message
 {
 	mixin JsonizeMe;
+	@jsonize message_id;
 	@jsonize Chat chat;
 	@jsonize (JsonizeOptional.yes) User from;
 	@jsonize string text;

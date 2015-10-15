@@ -56,6 +56,12 @@ class Bot
 		}
 		return updates;
 	}
+
+	Message sendMessage(T)(T recipient,string text)
+	{
+		auto response = performRequest("sendMessage",[tuple("chat_id",to!string(recipient)),tuple("text",text)]);
+		return fromJSON!Message(parseJSON(response)["result"]);
+	}	
 }
 
 class TelegramAPIException : Exception
@@ -76,4 +82,5 @@ unittest
 	assertNotThrown(testbot.getUpdates());
 	// Empty response
 	assert(testbot.getUpdates().length == 0,"Updates have not been cleared");
+	assertNotThrown(testbot.sendMessage(environment["chatid"],"hallo bartosch"));
 }

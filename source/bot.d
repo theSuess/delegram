@@ -5,6 +5,7 @@ import std.net.curl;
 import std.typecons;
 import std.format;
 import std.json;
+import std.uri;
 
 import jsonizer.fromjson;
 
@@ -59,6 +60,7 @@ class Bot
 
 	Message sendMessage(T)(T recipient,string text)
 	{
+		text = encode(text);
 		auto response = performRequest("sendMessage",[tuple("chat_id",to!string(recipient)),tuple("text",text)]);
 		return fromJSON!Message(parseJSON(response)["result"]);
 	}
@@ -82,5 +84,5 @@ unittest
 	assertNotThrown(testbot.getUpdates());
 	// Empty response
 	assert(testbot.getUpdates().length == 0,"Updates have not been cleared");
-	assertNotThrown(testbot.sendMessage(environment["chatid"],"TestMessage"));
+	assertNotThrown(testbot.sendMessage(environment["chatid"],"Test Message from your bot.\nURL Encoding 💅 %20"));
 }
